@@ -8,3 +8,11 @@
     padding: 0;
     box-sizing: border-box;
   }
+  .btn-custom {
+    background-color: #6C7EE1;
+    color: white;
+}
+
+.btn-custom:hover {
+    background-color: #6C7EE1;
+}

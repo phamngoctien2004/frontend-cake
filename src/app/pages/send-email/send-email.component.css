@@ -1,0 +1,26 @@
+.wrapper-form{
+    width: 100%;
+    max-width: 420px;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    background: white;
+}
+.container{
+    min-height:100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Segoe UI', sans-serif;
+}
+.btn-custom {
+    background-color: #6C7EE1;
+    color: white;
+}
+
+.btn-custom:hover {
+    background-color: #6C7EE1;
+}
+.header{
+    font-weight: 600;
+    opacity:0.8
+}

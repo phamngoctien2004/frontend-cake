@@ -8,10 +8,10 @@
         <img src="https://i.pravatar.cc/40?img=12" alt="avatar" class="rounded-circle" width="40" height="40"
             data-bs-toggle="dropdown">
 
-        <span class="text-dark">Xin chào, <strong>Admin</strong></span>
+        <span class="text-dark">Xin chào, <strong>{{user.name}}</strong></span>
         <ul class="dropdown-menu dropdown-account">
-            <li><a class="dropdown-item" href="#">Thông tin tài khoản</a></li>
-            <li><a class="dropdown-item" href="#">Đăng xuất</a></li>
+            <li><a class="dropdown-item">Thông tin tài khoản</a></li>
+            <li><a class="dropdown-item" (click)="logout()" style="cursor: pointer;">Đăng xuất</a></li>
         </ul>
     </div>
 </nav>

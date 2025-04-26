@@ -49,7 +49,13 @@
                             </div>
 
                         </div>
-
+                        <div class="d-flex justify-content-between mb-3">
+                            <div>
+                                <input type="checkbox" [(ngModel)]="model.remember" name="remember" value="0"> remember
+                                me
+                            </div>
+                            <a routerLink="/send-email">Quên mật khẩu?</a>
+                        </div>
                         <button class="btn btn-custom w-100" type="submit" [disabled]="login.invalid">Đăng nhập</button>
                     </form>
                 </div>

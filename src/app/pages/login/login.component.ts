@@ -4,10 +4,12 @@ import { loginDto } from '../../dto/login.dto';
 import { CommonModule } from '@angular/common';
 import { UserService } from '../../services/user.service';
 import { LoadingComponent } from "../../components/loading/loading.component";
+import { AuthService } from '../../services/auth.service';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-login',
-  imports: [FormsModule, CommonModule, LoadingComponent],
+  imports: [FormsModule, CommonModule, LoadingComponent, RouterLink],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
@@ -19,14 +21,9 @@ export class LoginComponent {
     activeTab = "login";
     loading = false;
 
-    constructor(private userService: UserService){
+    constructor(private authService: AuthService, private router: Router){
       this.model = new loginDto({});
-      this.modelRegister = new loginDto({
-        name: 'phạm ngọc tiến',
-        email: 'tienhvnhgpt@gmail.com',
-        password: '123456',
-        password_confirmation: '123456'
-      });
+      this.modelRegister = new loginDto({});
       this.message = {
         status: false,
         message: '',
@@ -35,13 +32,17 @@ export class LoginComponent {
     }
     onLogin(form: NgForm){
       this.loading = true;
+      console.log(this.model)
+      debugger;
       if(form.submitted){
-        this.userService.login(this.model).subscribe({
+        this.authService.login(this.model).subscribe({
           next: (response) => {
-            console.log(response.data);
+            const data = response.data;
             this.message.clicked = true;
             this.message.status = false;
             this.message.message = "Đăng nhập thành công"
+            console.log(response)
+            this.router.navigate(['/dashboard']);
           },
           error: (errorResponse) => {
             let errors = errorResponse.error.errors;
@@ -55,7 +56,7 @@ export class LoginComponent {
     onRegister(form: NgForm){
       this.loading = true;
       if(form.submitted){
-        this.userService.register(this.modelRegister).subscribe({
+        this.authService.register(this.modelRegister).subscribe({
           next: (response) => {
             console.log(response.data);
             this.loading = false;
@@ -71,9 +72,6 @@ export class LoginComponent {
           },
           complete: () => {
             setTimeout(()=>{
-              this.message.status = false,
-              this.message.message = '',
-              this.message.clicked = false
               this.switchTab('login')
             },4000)
           }
@@ -85,6 +83,9 @@ export class LoginComponent {
       }
     }
     switchTab(tab: string){
+      this.message.status = false,
+      this.message.message = '',
+      this.message.clicked = false
       this.activeTab = (tab === 'login' ? 'login': 'register');
     }
     passwordMatching(){      
