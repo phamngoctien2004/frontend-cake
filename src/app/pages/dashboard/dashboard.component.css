@@ -1,0 +1,17 @@
+.wrapper {
+    height: 100%;
+}
+
+
+app-header{
+    height: 72px;
+    width: 100%;
+}
+
+
+.content {
+    padding: 1.5rem;
+    background-color: #f0f5f9;
+}
+
+

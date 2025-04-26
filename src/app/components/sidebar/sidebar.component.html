@@ -1,0 +1,17 @@
+<!-- sidebar -->
+<aside class="sidebar" id="sidebar" [class.show]="isShow">
+    <div class="main">
+        <a class="navbar-brand">Trang quản trị</a>
+        <nav class="nav flex-column p-3">
+            <a class="nav-link active" href="#"><i class="bi bi-house-door me-2"></i>Trang chủ</a>
+            <a class="nav-link" href="#"><i class="bi bi-person me-2"></i>Người dùng</a>
+            <a class="nav-link" href="#"><i class="bi bi-box-seam  me-2"></i>Sản phẩm</a>
+            <a class="nav-link" href="#"><i class="bi bi-bar-chart-line me-2"></i>Thống kê</a>
+            <a class="nav-link" href="#"><i class="bi bi-gear me-2"></i>Cài đặt</a>
+            <a class="nav-link text-danger" href="#"><i class="bi bi-box-arrow-right me-2"></i>Đăng xuất</a>
+        </nav>
+    </div>
+    <div class="fill" (click)="toggleSidebar()">
+
+    </div>
+</aside>

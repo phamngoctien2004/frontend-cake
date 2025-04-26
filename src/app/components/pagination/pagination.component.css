@@ -1,0 +1,7 @@
+.active a {
+    background: #6C7EE1 !important;
+}
+
+.page-link:focus {
+    box-shadow: none;
+}
