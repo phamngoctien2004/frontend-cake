@@ -2,8 +2,9 @@
     <div class="container">
         <div class="wrapper-form p-4">
             <h2 class="header"><i class="fa-solid fa-key"></i> Quên mật khẩu </h2>
-            <div *ngIf="" class="alert alert-success">Đổi mật khẩu thành công</div>
-            <div *ngIf="" class="alert alert-danger">Đổi mật khẩu thất bại</div>
+
+            <div *ngIf="success.status && !success.hidden" class="alert alert-success">Đổi mật khẩu thành công</div>
+            <div *ngIf="!success.status && !success.hidden" class="alert alert-danger">Đổi mật khẩu thất bại</div>
             <form #reset="ngForm" (ngSubmit)="onReset(reset)">
                 <div class="mb-3">
                     <label for="" class="form-label">Mật khẩu mới</label>
@@ -31,3 +32,8 @@
 
     </div>
 </div>
+@if(success.loading){
+<div class="progress-bar-container">
+    <div class="spinner"></div>
+</div>
+}

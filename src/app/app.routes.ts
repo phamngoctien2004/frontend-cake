@@ -6,10 +6,11 @@ import { authGuard } from './guards/auth.guard';
 import { adminGuard } from './guards/admin.guard';
 import { ForgotComponent } from './pages/forgot/forgot.component';
 import { SendEmailComponent } from './pages/send-email/send-email.component';
+import { HomepageComponent } from './public/homepage/homepage.component';
 
 export const routes: Routes = [
     {
-        path:'',
+        path:'auth',
         component: LoginComponent
     },
     {
@@ -28,6 +29,10 @@ export const routes: Routes = [
     {
         path: 'send-email',
         component: SendEmailComponent
+    },
+    {
+        path: '',
+        component: HomepageComponent
     }
 
 ];

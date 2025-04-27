@@ -5,8 +5,15 @@
                 <span class="m-3">Xác nhận email</span>
             </h2>
             <small>Vui lòng nhập email của bạn để chúng tôi có thể gửi cho bạn một liên kết để đặt lại mật khẩu.</small>
-            <div *ngIf="" class="alert alert-success mt-2">Kiểm tra link xác nhận tại email của bạn</div>
-            <div *ngIf="" class="alert alert-danger mt-2">Đã có lỗi xảy ra</div>
+            @if(success.loading){
+            <div class="progress-bar-container">
+                <div class="spinner"></div>
+            </div>
+            }
+
+            <div *ngIf="success.status && !success.hidden" class="alert alert-success mt-2">Kiểm tra link xác nhận tại
+                email của bạn</div>
+            <div *ngIf="!success.status && !success.hidden" class="alert alert-danger mt-2">Email không hợp lệ</div>
             <form #send_email="ngForm" (ngSubmit)="onSendEmail(send_email)">
 
                 <div class="mb-3 mt-3">
@@ -16,7 +23,7 @@
                 </div>
                 <div *ngIf="email.touched && email.errors?.['email']" class="text-danger mb-3">Nhập đúng email</div>
                 <button class="btn btn-custom w-100 mb-2" type="submit">Xác nhận</button>
-                <a routerLink="/">Quay lại</a>
+                <a routerLink="/auth">Quay lại</a>
             </form>
         </div>
 

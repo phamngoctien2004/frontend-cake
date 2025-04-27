@@ -1,34 +1,54 @@
 import { Component } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { loginDto } from '../../dto/login.dto';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-forgot',
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, RouterLink],
   templateUrl: './forgot.component.html',
   styleUrl: './forgot.component.css'
 })
 export class ForgotComponent {
     model: loginDto;
-    message = {
-        status: false,
+    success = {
+      status: true,
+      hidden: true,
+      loading: false
     }
-    constructor(private router: ActivatedRoute){
+    constructor(private routerA: ActivatedRoute, 
+      private router: Router,
+      private authService: AuthService){
       this.model = new loginDto({
-        token: this.router.snapshot.queryParams['token'],
-        email: this.router.snapshot.queryParams['email']
+        token: this.routerA.snapshot.queryParams['token'],
+        email: this.routerA.snapshot.queryParams['email']
       })
-    }
-    ngOnInit(){
-      // this.router.queryParams.subscribe(params => {
-      //   console.log(params);
-      // })
     }
 
     onReset(form: NgForm){
+      console.log(this.model)
 
+      this.authService.resetPassword(this.model).subscribe({
+        next: (response) => {
+          console.log(response);
+          this.success.status = true;
+          this.success.loading = false;
+          this.success.hidden = false;
+
+          setTimeout(()=>{
+            this.router.navigate(['/auth']);
+          },4000)
+        },
+        error: (errorResponse) => {
+          console.log(errorResponse);
+          this.success.status = false;
+          this.success.loading = false;
+          this.success.hidden = false;
+        }
+      })
+      this.success.loading=true;
     }
 
     passwordMatching(){      

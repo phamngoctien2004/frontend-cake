@@ -42,7 +42,13 @@ export class LoginComponent {
             this.message.status = false;
             this.message.message = "Đăng nhập thành công"
             console.log(response)
-            this.router.navigate(['/dashboard']);
+
+            if(data.user.role === 'admin'){
+              this.router.navigate(['/dashboard']);
+            }else{
+              this.router.navigate(['/']);
+            }
+            
           },
           error: (errorResponse) => {
             let errors = errorResponse.error.errors;

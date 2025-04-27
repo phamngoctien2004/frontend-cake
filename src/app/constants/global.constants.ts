@@ -4,7 +4,9 @@ export const API_CONFIG = {
         AUTH: {
             LOGIN: '/api/login',
             REGISTER: '/api/register',
-            LOGOUT: '/api/logout'
+            LOGOUT: '/api/logout',
+            FORGOT_PASSWORD: '/api/password/forgot',
+            RESET_PASSWORD: '/api/password/reset'
         },
         USERS: {
             BASE: '/api/users',

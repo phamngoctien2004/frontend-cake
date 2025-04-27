@@ -17,6 +17,6 @@ export const adminGuard: CanActivateFn = (route, state) => {
   }
 
   // Nếu chưa đăng nhập
-  router.navigate(['/']);
+  router.navigate(['auth']);
   return false;
 };

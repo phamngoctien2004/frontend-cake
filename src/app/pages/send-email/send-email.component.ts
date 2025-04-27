@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { loginDto } from '../../dto/login.dto';
 import { RouterLink } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-send-email',
@@ -12,12 +13,36 @@ import { RouterLink } from '@angular/router';
 })
 export class SendEmailComponent {
     model: loginDto;
-
-    constructor(){
+    success = {
+      status: true,
+      hidden: true,
+      loading: false
+    }
+    constructor(private authService: AuthService){
       this.model = new loginDto({});
     }
     
     onSendEmail(form: NgForm){
+      console.log(this.model);
 
+
+      this.authService.sendEmailToResetPassword(this.model).subscribe({
+        next: (response) => {
+          console.log(response);
+          this.success.status = true;
+          this.success.loading = false;
+          this.success.hidden = false;
+
+        },
+        error: (errorResponse) => {
+          console.log(errorResponse);
+          this.success.status = false;
+          this.success.loading = false;
+          this.success.hidden = false;
+        }
+      })
+      this.success.loading=true;
     }
+
+    
 }

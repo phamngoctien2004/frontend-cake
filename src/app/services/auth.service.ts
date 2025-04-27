@@ -72,4 +72,11 @@ export class AuthService {
     );
   }
   
+  sendEmailToResetPassword(emailRequest: any){
+    return this.http.post<any>(this.url + `${API_CONFIG.ENDPOINTS.AUTH.FORGOT_PASSWORD}`,emailRequest);
+  }
+
+  resetPassword(resetPasswordRequest: any){
+    return this.http.post<any>(this.url + `${API_CONFIG.ENDPOINTS.AUTH.RESET_PASSWORD}`,resetPasswordRequest);
+  }
 }
