@@ -1,59 +1,115 @@
 # FrontendCake
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.6.
+Dự án frontend được xây dựng bằng Angular CLI version 19.2.6.
 
-## Development server
+## Yêu cầu hệ thống
 
-To start a local development server, run:
+- Node.js (version 18.x trở lên)
+- npm (version 9.x trở lên)
+- Angular CLI (version 19.x)
 
+## Cài đặt
+
+1. Clone dự án:
+```bash
+git clone https://github.com/your-username/frontend-cake.git
+cd frontend-cake
+```
+
+2. Cài đặt dependencies:
+```bash
+npm install
+```
+
+## Chạy dự án
+
+### Development server
+
+Chạy server development:
 ```bash
 ng serve
 ```
-
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
+hoặc
 ```bash
-ng generate component component-name
+npm start
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+Truy cập ứng dụng tại `http://localhost:4200`. Ứng dụng sẽ tự động reload khi có thay đổi trong source code.
 
-```bash
-ng generate --help
-```
+### Build
 
-## Building
-
-To build the project run:
-
+Build dự án:
 ```bash
 ng build
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Các file build sẽ được lưu trong thư mục `dist/`. Sử dụng flag `--prod` cho production build.
 
-## Running unit tests
+## Cấu trúc dự án
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+```
+frontend-cake/
+├── src/
+│   ├── app/
+│   │   ├── components/     # Shared components
+│   │   ├── pages/         # Page components
+│   │   ├── services/      # Services
+│   │   ├── guards/        # Route guards
+│   │   ├── interceptors/  # HTTP interceptors
+│   │   └── constants/     # Constants & configurations
+│   ├── assets/           # Static assets
+│   └── environments/     # Environment configurations
+├── public/              # Public assets
+└── ...
+```
 
+## Tính năng chính
+
+- Xác thực người dùng (Login/Logout)
+- Quản lý người dùng
+- Dashboard admin
+- Responsive design
+- Bootstrap integration
+- Font Awesome icons
+
+## Công nghệ sử dụng
+
+- Angular 19
+- Bootstrap 5
+- Font Awesome
+- RxJS
+- TypeScript
+
+## API Backend
+
+Ứng dụng kết nối với backend API tại `http://localhost:8000`. Đảm bảo backend server đang chạy trước khi khởi động frontend.
+
+## Testing
+
+### Unit Tests
 ```bash
 ng test
 ```
 
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
+### End-to-end Tests
 ```bash
 ng e2e
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+## Contributing
 
-## Additional Resources
+1. Fork dự án
+2. Tạo feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to branch (`git push origin feature/AmazingFeature`)
+5. Tạo Pull Request
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## License
+
+[MIT License](LICENSE)
+
+## Liên hệ
+
+Your Name - email@example.com
+
+Project Link: https://github.com/your-username/frontend-cake
