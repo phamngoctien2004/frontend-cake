@@ -47,7 +47,18 @@ export class UserComponent {
       }
     })
   }
-
+  deleteUser(id: number) {
+    if (confirm('Bạn có chắc chắn muốn xóa người dùng này?')) {
+      this.userService.delete(id).subscribe({
+        next: () => {
+          this.loadUsers();
+        },
+        error: (error) => {
+          console.error('Lỗi khi xóa người dùng:', error);
+        }
+      });
+    }
+  }
   getCurrentPage(e: number){
     this.users.current_page = e;
     console.log(this.users.current_page)

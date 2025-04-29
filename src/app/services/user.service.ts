@@ -38,7 +38,9 @@ export class UserService {
       })
     )
   }
-
+  delete(id: number): Observable<any> {
+    return this.http.delete(`${this.url}${API_CONFIG.ENDPOINTS.USERS.BASE}/${id}`);
+  }
   toListUserDTO(data: any[]){
     return data.map(user => new UserDTO(user))
   }
