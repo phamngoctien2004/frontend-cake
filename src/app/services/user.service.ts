@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { API_CONFIG } from '../constants/global.constants';
 import { UserDTO } from '../dto/user.dto';
 import { Observable, map } from 'rxjs';
 import { loginDto } from '../dto/login.dto';
 import { AuthService } from './auth.service';
+import { PaginationResponse } from '../dto/pagination.dto';
 
 
 @Injectable({
@@ -16,15 +17,24 @@ export class UserService {
   constructor(private http: HttpClient, private authService: AuthService) { }
 
 
-  get(): Observable<UserDTO[]>{
-    let result: UserDTO[] = [];
+  get(page?: number): Observable<PaginationResponse<UserDTO>>{
+    let result: PaginationResponse<UserDTO> = {
+      data: [],
+      current_page: 0,
+      last_page: 0
+    }
 
+    let params = new HttpParams();
+    params = params.append('page',page || 1);
+    console.log("param ", params);
     // pipe đón response và trả về kết quả cho next
-    return this.http.get<any>(this.url + `${API_CONFIG.ENDPOINTS.USERS.BASE}`).pipe(
+    return this.http.get<any>(this.url + `${API_CONFIG.ENDPOINTS.USERS.BASE}`,{params: params}).pipe(
       map(response => {
-        const data: any[] = response.data;
         console.log(response)
-        return this.toListUserDTO(data);
+        result.data = response.data;
+        result.current_page = response.meta.current_page;
+        result.last_page = response.meta.last_page;
+        return result;
       })
     )
   }
@@ -32,6 +42,4 @@ export class UserService {
   toListUserDTO(data: any[]){
     return data.map(user => new UserDTO(user))
   }
-
-
 }
