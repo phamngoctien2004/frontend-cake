@@ -43,7 +43,9 @@ export class AuthService {
   login(loginDto: loginDto){
     return this.http.post<any>(this.url + `${API_CONFIG.ENDPOINTS.AUTH.LOGIN}`, {
       email: loginDto.email,
-      password: loginDto.password
+      password: loginDto.password,
+      remember: loginDto.remember,  // Thêm remember vào request body
+      captcha: loginDto.captcha     // Đảm bảo captcha cũng được gửi đi
     }).pipe(
       tap(response => {
         this.setToken(response.data.access_token);
@@ -58,7 +60,8 @@ export class AuthService {
       name: loginDto.name,
       email: loginDto.email,
       password: loginDto.password,
-      password_confirmation: loginDto.password_confirmation
+      password_confirmation: loginDto.password_confirmation,
+      captcha: loginDto.captcha
     });
   }
 
