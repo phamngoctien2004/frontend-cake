@@ -6,7 +6,8 @@
             <div class="mb-3 col-12 col-sm-6 col-md-3">
                 <label for="email" class="form-label">Email</label>
                 <input type="email" class="form-control" id="email" placeholder="nhap@email.com" autocomplete
-                    [(ngModel)]="model.email" name="email" #email="ngModel" required email>
+                    [(ngModel)]="model.email" name="email" #email="ngModel" required email
+                    [disabled]="success.isEditMode">
                 <div *ngIf="email.touched">
                     <p *ngIf="email.errors?.['required']" class="text-danger">Yêu cầu nhập email</p>
                     <p *ngIf="email.errors?.['email']" class="text-danger">Email không hợp lệ</p>
@@ -41,7 +42,7 @@
             </div>
             <div class="mb-3 col-12 col-sm-6 col-md-3">
                 <label for="dateUpdated" class="form-label">Ngày Cập nhật</label>
-                <input type="text" class="form-control" id="dateUpdated" [value]="formattedCreatedAt" disabled>
+                <input type="text" class="form-control" id="dateUpdated" [value]="formattedUpdatedAt" disabled>
             </div>
             <div class="mb-3 col-6">
                 <label for="regPassword" class="form-label">Mật khẩu</label>
@@ -50,6 +51,7 @@
                     [disabled]="disablePassword && success.isEditMode">
                 <i *ngIf="success.isEditMode" class="fa-solid fa-eye" (click)="disablePass()"></i>
             </div>
+            <input type="hidden" name="email_verified_at" [(ngModel)]="model.email_verified_at">
             <input type="hidden" name="id" [(ngModel)]="model.id">
             <div>
                 <button class="btn btn-main m-2" type="submit">

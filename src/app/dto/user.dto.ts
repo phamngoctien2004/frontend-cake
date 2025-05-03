@@ -5,6 +5,7 @@ export class UserDTO{
     is_active: boolean
     created_at: Date 
     updated_at: Date 
+    email_verified_at: string
     role: string
     password: string | undefined
     constructor(user: any){
@@ -16,6 +17,7 @@ export class UserDTO{
         this.updated_at = user.updated_at;
         this.role = user.role;
         this.password = user.password;
+        this.email_verified_at = new Date().toISOString();
     }
 
 }

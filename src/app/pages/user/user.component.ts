@@ -5,13 +5,15 @@ import { UserService } from '../../services/user.service';
 import { UserDTO } from '../../dto/user.dto';
 import { LoadingComponent } from '../../components/loading/loading.component';
 import { PaginationResponse } from '../../dto/pagination.dto';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ModalComponent } from '../../components/modal/modal.component';
 import { CommonModule } from '@angular/common';
+import { FormsModule, NgForm } from '@angular/forms';
+import { searchDTO } from '../../dto/search.dto';
 
 @Component({
   selector: 'app-user',
-  imports: [PaginationComponent, LoadingComponent, RouterLink, ModalComponent, CommonModule],
+  imports: [PaginationComponent, LoadingComponent, RouterLink, ModalComponent, CommonModule, FormsModule],
   templateUrl: './user.component.html',
   styleUrl: './user.component.css'
 })
@@ -25,23 +27,26 @@ export class UserComponent {
   loading = true;
   showModal = false;
   selectedUser: UserDTO = new UserDTO({});
-  constructor(private userService: UserService){
+  searchParam = new searchDTO({
+    search: '',
+    role: '',
+    is_active: ''
+  })
+  constructor(private userService: UserService, private activeRoute: ActivatedRoute, private router: Router){
   }
 
   ngOnInit(): void{
-      this.loadUsers();
+      this.loadUsers(1);
   } 
   ngOnChanges(): void{
     // this.loadUsers();
     console.log('123')
   }
-  loadUsers(){
-    let page = this.users.current_page;
-    this.userService.get(page).subscribe({
+  loadUsers(page: number, searchParam?: searchDTO){
+    this.userService.get(page, searchParam).subscribe({
       next: (response) => {
         this.users = response;
-        this.users.data = this.userService.getUserByPage(page);
-        console.log(this.users)
+        this.users.data = this.userService.getUserByPage(page || 1);
       },
       error: (error) => {
         console.error('Có lỗi xảy ra', error);
@@ -57,7 +62,7 @@ export class UserComponent {
     if (confirm('Bạn có chắc chắn muốn xóa người dùng này?')) {
       this.userService.delete(id).subscribe({
         next: () => {
-          this.loadUsers();
+          this.loadUsers(1);
         },
         error: (error) => {
           console.error('Lỗi khi xóa người dùng:', error);
@@ -68,7 +73,6 @@ export class UserComponent {
   getCurrentPage(e: number){
     this.users.current_page = e;
     this.users.data = this.userService.getUserByPage(e);
-    console.log(this.users.current_page)
     // this.loadUsers();
     // this.disablePagination = true;
   }
@@ -81,5 +85,12 @@ export class UserComponent {
     console.log("12")
     this.selectedUser = new UserDTO({});
   }
-
+  onSearch(form: NgForm){
+    console.log(this.searchParam)
+    this.router.navigate(['/dashboard/users'], {
+      queryParams: this.searchParam
+    });
+    
+    this.loadUsers(1, this.searchParam);;
+  }
 }

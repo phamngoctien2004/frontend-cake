@@ -6,9 +6,29 @@
     <app-loading></app-loading>
     } @else {
     <div class="d-flex justify-content-between mb-4">
-        <form action="" method="get" class="d-flex w-50">
-            <input type="text" class="form-control w-75" placeholder="nhập tên hoặc email">
-            <button class="btn btn-main">
+        <form class="row w-75" #search="ngForm" (ngSubmit)="onSearch(search)" method="get">
+            <div class="col-3">
+                <input type="text" class="form-control" placeholder="nhập tên hoặc email" name="search"
+                    [(ngModel)]="searchParam.name">
+            </div>
+            <div class="col-3">
+                <select class="form-control text-center" name="role" id="" [(ngModel)]="searchParam.role">
+                    <option value="">--Vai trò--</option>
+                    <option value="admin">Quản trị viên</option>
+                    <option value="user">Người dùng</option>
+                </select>
+            </div>
+            <div class="col-3">
+                <select class="form-control text-center" name="is_active" id="" [(ngModel)]="searchParam.is_active">
+                    <option value="">--Trạng thái--</option>
+                    <option value="1">Hoạt động</option>
+                    <option value="0">không hoạt động</option>
+                </select>
+            </div>
+
+
+
+            <button class="btn btn-main col-1 mx-2" type="submit">
                 <i class="fa-brands fa-searchengin"></i>
             </button>
         </form>
@@ -26,6 +46,7 @@
                     <th scope="col">Họ và tên</th>
                     <th scope="col">Email</th>
                     <th scope="col">Trạng thái</th>
+                    <th scope="col">Vai trò</th>
                     <th scope="col">Thao tác</th>
                 </tr>
             </thead>
@@ -45,6 +66,7 @@
                             {{user.is_active ? 'Hoạt động' : 'Không hoạt động'}}
                         </span>
                     </td>
+                    <td>{{user.role === 'admin' ? 'Quản trị viên' : 'Người dùng'}}</td>
                     <td>
                         <a class="btn btn-success btn-sm m-1" (click)="onDetail(user.id)">Xem</a>
                         <a [routerLink]="['/dashboard/users/edit', user.id]" class="btn btn-warning btn-sm m-1">

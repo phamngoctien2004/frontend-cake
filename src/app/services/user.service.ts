@@ -7,6 +7,7 @@ import { loginDto } from '../dto/login.dto';
 import { AuthService } from './auth.service';
 import { PaginationResponse } from '../dto/pagination.dto';
 import { ResponseDTO } from '../dto/response.dto';
+import { searchDTO } from '../dto/search.dto';
 
 
 @Injectable({
@@ -18,22 +19,24 @@ export class UserService {
   constructor(private http: HttpClient, private authService: AuthService) { }
   users: UserDTO[] = [];
 
-  get(page?: number): Observable<PaginationResponse<UserDTO>>{
+  get(page?: number, searchParam?: searchDTO): Observable<PaginationResponse<UserDTO>>{
     let result: PaginationResponse<UserDTO> = {
       data: [],
       current_page: 1,
       last_page: 0
     }
-
     let params = new HttpParams();
     params = params.append('page',page || 1);
-    console.log("param ", params);
+    if(searchParam){
+      params = params.append('search',searchParam.name);
+      params = params.append('role', searchParam.role);
+      params = params.append('is_active', searchParam.is_active);
+    }
+
     // pipe đón response và trả về kết quả cho next
     return this.http.get<any>(this.url + `${API_CONFIG.ENDPOINTS.USERS.BASE}`,{params: params}).pipe(
       map(response => {
-        console.log(response)
         this.users = response.data;
-        console.log(this.users)
         result.data = response.data;
         result.last_page = this.calcTotalPages(response.meta.total);
         return result;
@@ -46,7 +49,8 @@ export class UserService {
       name: user.name,
       password: user.password,
       is_active: user.is_active,
-      role: user.role
+      role: user.role,
+      email_verified_at: user.email_verified_at
     });
   }
 
@@ -89,7 +93,6 @@ export class UserService {
     return this.users.find(user => user.id === id) || new UserDTO({});
   }
   getUserByPage(page: number){
-    console.log(this.users)
     return this.users.slice((page - 1) * 5, page * 5);
   }
 }

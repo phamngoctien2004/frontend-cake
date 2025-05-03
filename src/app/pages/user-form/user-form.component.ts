@@ -38,9 +38,10 @@ export class UserFormComponent {
         this.userService.getById(params['id']).subscribe({
           next: (response) => {
             this.model = response.data;
-            console.log(response)
             this.formattedCreatedAt = this.userService.formatDateTime(new Date(response.data.created_at));
             this.formattedUpdatedAt = this.userService.formatDateTime(new Date(response.data.updated_at));
+            console.log(this.formattedCreatedAt,this.formattedUpdatedAt)
+
           }
         })
       }
@@ -61,6 +62,7 @@ export class UserFormComponent {
   }
 
   storeUser(user: UserDTO){
+    
     this.userService.post(user).subscribe({
       next: (response) => {
         this.success.showModal=true;
