@@ -3,9 +3,10 @@ export class UserDTO{
     name: string
     email: string
     is_active: boolean
-    created_at: Date
-    updated_at: Date
-
+    created_at: Date 
+    updated_at: Date 
+    role: string
+    password: string
     constructor(user: any){
         this.id = user.id;
         this.name = user.name;
@@ -13,6 +14,8 @@ export class UserDTO{
         this.is_active = user.is_active;
         this.created_at = user.created_at;
         this.updated_at = user.updated_at;
+        this.role = user.role;
+        this.password = user.password;
     }
 
 }

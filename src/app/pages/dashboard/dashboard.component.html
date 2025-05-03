@@ -3,7 +3,9 @@
 
     <div class="d-flex w-100 flex-wrap">
         <app-header (toggleSidebar)="sidebar.toggleSidebar()"></app-header>
-        <app-user class="content flex-grow-1 rounded-4"></app-user>
+        <div class="content flex-grow-1 rounded-4">
+            <router-outlet></router-outlet>
+        </div>
     </div>
 
 </div>

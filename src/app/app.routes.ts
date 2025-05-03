@@ -7,6 +7,8 @@ import { adminGuard } from './guards/admin.guard';
 import { ForgotComponent } from './pages/forgot/forgot.component';
 import { SendEmailComponent } from './pages/send-email/send-email.component';
 import { HomepageComponent } from './public/homepage/homepage.component';
+import { UserFormComponent } from './pages/user-form/user-form.component';
+import { UserComponent } from './pages/user/user.component';
 
 export const routes: Routes = [
     {
@@ -16,7 +18,21 @@ export const routes: Routes = [
     {
         path:'dashboard',
         component: DashboardComponent,
-        canActivate: [authGuard, adminGuard]
+        canActivate: [authGuard, adminGuard],
+        children:[
+            {
+                path: 'users',
+                component: UserComponent
+            },
+            {
+                path: 'users/add',
+                component: UserFormComponent,
+            },
+            {
+                path: 'users/edit/:id',
+                component: UserFormComponent,
+            }
+        ]
     },
     {
         path:'forbidden',
@@ -33,6 +49,10 @@ export const routes: Routes = [
     {
         path: '',
         component: HomepageComponent
+    },
+    {
+        path: 'dashboard/user',
+        component: UserFormComponent
     }
 
 ];

@@ -41,6 +41,7 @@ export class AuthService {
   }
 
   login(loginDto: loginDto){
+
     return this.http.post<any>(this.url + `${API_CONFIG.ENDPOINTS.AUTH.LOGIN}`, {
       email: loginDto.email,
       password: loginDto.password,

@@ -46,3 +46,10 @@ tr {
     margin-left: 20px;
 }
 
+.info-row{
+    margin: 20px 0;
+}
+
+.w-30{
+    width: 30%;
+}
