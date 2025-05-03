@@ -56,6 +56,17 @@
                             </div>
                             <a routerLink="/send-email">Quên mật khẩu?</a>
                         </div>
+                        
+                        <!-- Widget reCAPTCHA v2 cho đăng nhập -->
+                        <div class="mb-3">
+                            <div id="login-captcha" class="g-recaptcha" 
+                                data-sitekey="6LfweSkrAAAAAIY0vALyQjfGCMHAsHLyKE27oEXz">
+                            </div>
+                            <div *ngIf="captchaError" class="text-danger mt-2">
+                                Vui lòng xác nhận bạn không phải robot
+                            </div>
+                        </div>
+                        
                         <button class="btn btn-custom w-100" type="submit" [disabled]="login.invalid">Đăng nhập</button>
                     </form>
                 </div>
@@ -103,6 +114,17 @@
                                 không
                                 khớp</p>
                         </div>
+                        
+                        <!-- Widget reCAPTCHA v2 cho đăng ký -->
+                        <div class="mb-3">
+                            <div id="register-captcha" class="g-recaptcha" 
+                                data-sitekey="6LfweSkrAAAAAIY0vALyQjfGCMHAsHLyKE27oEXz">
+                            </div>
+                            <div *ngIf="captchaError" class="text-danger mt-2">
+                                Vui lòng xác nhận bạn không phải robot
+                            </div>
+                        </div>
+                        
                         <button type="submit" class="btn btn-custom w-100"
                             [disabled]="register.invalid || !passwordMatching()">Đăng ký</button>
                     </form>

@@ -5,6 +5,7 @@ export class loginDto{
     password_confirmation?: string;
     remember: boolean;
     token?: string;
+    captcha: string;
     constructor(data: any){
         this.email = data.email;
         this.password = data.password;
@@ -12,5 +13,6 @@ export class loginDto{
         this.name = data.name;
         this.remember = data.remember || true;
         this.token = data.token;
+        this.captcha = data.captcha || '';
     }
 }
