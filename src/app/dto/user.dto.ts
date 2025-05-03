@@ -6,7 +6,7 @@ export class UserDTO{
     created_at: Date 
     updated_at: Date 
     role: string
-    password: string
+    password: string | undefined
     constructor(user: any){
         this.id = user.id;
         this.name = user.name;

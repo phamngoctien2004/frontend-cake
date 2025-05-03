@@ -40,7 +40,25 @@ export class UserService {
       })
     )
   }
+  post(user: UserDTO): Observable<ResponseDTO<UserDTO>>{
+    return this.http.post<any>(this.url + `${API_CONFIG.ENDPOINTS.USERS.BASE}`,{
+      email: user.email,
+      name: user.name,
+      password: user.password,
+      is_active: user.is_active,
+      role: user.role
+    });
+  }
 
+  put(user: UserDTO): Observable<ResponseDTO<UserDTO>>{
+    return this.http.put<any>(this.url + `${API_CONFIG.ENDPOINTS.USERS.BASE}/${user.id}`,{
+      email: user.email,
+      name: user.name,
+      password: user.password,
+      is_active: user.is_active,
+      role: user.role
+    });
+  }
   getById(id: number): Observable<ResponseDTO<UserDTO>>{
     return this.http.get<ResponseDTO<UserDTO>>(this.url + `${API_CONFIG.ENDPOINTS.USERS.BASE}/${id}`)
   }

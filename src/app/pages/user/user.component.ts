@@ -52,6 +52,7 @@ export class UserComponent {
       }
     })
   }
+
   deleteUser(id: number) {
     if (confirm('Bạn có chắc chắn muốn xóa người dùng này?')) {
       this.userService.delete(id).subscribe({
