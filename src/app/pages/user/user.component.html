@@ -12,7 +12,7 @@
                 <i class="fa-brands fa-searchengin"></i>
             </button>
         </form>
-        <button class="btn btn-main">
+        <button class="btn btn-main" routerLink="/dashboard/users/add">
             <i class="fa-solid fa-plus"></i>
             Thêm
         </button>
@@ -46,8 +46,10 @@
                         </span>
                     </td>
                     <td>
-                        <button class="btn btn-success btn-sm m-1">Xem</button>
-                        <button class="btn btn-warning btn-sm m-1">Sửa</button>
+                        <a class="btn btn-success btn-sm m-1" (click)="onDetail(user.id)">Xem</a>
+                        <a [routerLink]="['/dashboard/users/edit', user.id]" class="btn btn-warning btn-sm m-1">
+                            <i class="fas fa-edit"></i> Sửa
+                        </a>
                         <button class="btn btn-danger btn-sm m-1" (click)="deleteUser(user.id)">Xóa</button>
                     </td>
                 </tr>
@@ -60,3 +62,48 @@
     <app-pagination [currentPage]="users.current_page" [totalPages]="users.last_page" [disabled]="disablePagination"
         (pageChange)="getCurrentPage($event)"></app-pagination>
 </div>
+
+<app-modal *ngIf="selectedUser" [isVisible]="showModal" [title]="'Thông tin người dùng'" [size]="'lg'"
+    (closeModal)="onClose()">
+    <!-- (closeModal)="closeModal()" -->
+    <!-- Template cho phần body của modal -->
+    <ng-template #modalBody>
+        <div class="user-info row justify-content-evenly">
+            <div class="col-5 p-4">
+                <div class="info-row">
+                    <div class="info-label">ID: {{ selectedUser.id || 'N/A' }}</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">Họ và tên: {{ selectedUser.name || 'N/A' }}</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">Email: {{ selectedUser.email || 'N/A' }}</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">Vai trò: {{ selectedUser.role === 'admin' ? 'Quản trị viên' : 'Người dùng'
+                        }}
+                    </div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">Trạng thái:
+                        <span [class]="selectedUser.is_active ? 'badge bg-success' : 'badge bg-danger'">
+                            {{ selectedUser.is_active ? 'Hoạt động' : 'Không hoạt động' }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 p-4">
+                <div class="info-row">
+                    <div class="info-label">Ngày tạo:</div>
+                    <div class="info-value">{{ selectedUser.created_at }}</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">Ngày cập nhật:</div>
+                    <div class="info-value">{{ selectedUser.updated_at }}</div>
+                </div>
+            </div>
+
+
+        </div>
+    </ng-template>
+</app-modal>

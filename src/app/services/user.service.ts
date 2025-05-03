@@ -6,6 +6,7 @@ import { Observable, map } from 'rxjs';
 import { loginDto } from '../dto/login.dto';
 import { AuthService } from './auth.service';
 import { PaginationResponse } from '../dto/pagination.dto';
+import { ResponseDTO } from '../dto/response.dto';
 
 
 @Injectable({
@@ -13,14 +14,14 @@ import { PaginationResponse } from '../dto/pagination.dto';
 })
 export class UserService {
   private url = `${API_CONFIG.BASE_URL}`
-      
+    
   constructor(private http: HttpClient, private authService: AuthService) { }
-
+  users: UserDTO[] = [];
 
   get(page?: number): Observable<PaginationResponse<UserDTO>>{
     let result: PaginationResponse<UserDTO> = {
       data: [],
-      current_page: 0,
+      current_page: 1,
       last_page: 0
     }
 
@@ -31,12 +32,17 @@ export class UserService {
     return this.http.get<any>(this.url + `${API_CONFIG.ENDPOINTS.USERS.BASE}`,{params: params}).pipe(
       map(response => {
         console.log(response)
+        this.users = response.data;
+        console.log(this.users)
         result.data = response.data;
-        result.current_page = response.meta.current_page;
-        result.last_page = response.meta.last_page;
+        result.last_page = this.calcTotalPages(response.meta.total);
         return result;
       })
     )
+  }
+
+  getById(id: number): Observable<ResponseDTO<UserDTO>>{
+    return this.http.get<ResponseDTO<UserDTO>>(this.url + `${API_CONFIG.ENDPOINTS.USERS.BASE}/${id}`)
   }
   delete(id: number): Observable<any> {
     return this.http.delete(`${this.url}${API_CONFIG.ENDPOINTS.USERS.BASE}/${id}`);
@@ -44,4 +50,30 @@ export class UserService {
   toListUserDTO(data: any[]){
     return data.map(user => new UserDTO(user))
   }
+
+  formatDateTime(date: Date): string {
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const seconds = String(date.getSeconds()).padStart(2, '0');
+    
+    return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
+  }
+  calcTotalPages(usersQuantity: number): number{
+    return Math.ceil(usersQuantity / 5);
+  }
+  getUsers(){
+    return this.users;
+  }
+  getUserInfo(id: number): UserDTO{
+    return this.users.find(user => user.id === id) || new UserDTO({});
+  }
+  getUserByPage(page: number){
+    console.log(this.users)
+    return this.users.slice((page - 1) * 5, page * 5);
+  }
 }
+
+
