@@ -129,3 +129,29 @@
         </div>
     </ng-template>
 </app-modal>
+
+
+<app-modal [isVisible]="success_delete.showModal" (closeModal)="onClose()">
+    <!-- (closeModal)="closeModal()" -->
+    <!-- Template cho phần body của modal -->
+    <ng-template #modalBody>
+        <div class="text-center">
+            <div *ngIf="success_delete.modalTitle" class="mb-3">
+                <i class="fas fa-check-circle text-success text-lg" style="font-size: 6rem;"></i>
+            </div>
+
+            <div *ngIf="!success_delete.modalTitle" class="mb-3">
+                <i class="fas fa-times-circle text-danger" style="font-size: 3rem;"></i>
+            </div>
+            <div *ngIf="success_delete.modalTitle">
+                <h2>Xóa thành công</h2>
+            </div>
+            <div *ngIf="!success_delete.modalTitle">
+                <h2>Lỗi:</h2>
+                @for (e of success_delete.message; track $index) {
+                <p>{{ e }}</p>
+                }
+            </div>
+        </div>
+    </ng-template>
+</app-modal>

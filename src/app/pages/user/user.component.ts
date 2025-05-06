@@ -32,6 +32,12 @@ export class UserComponent {
     role: '',
     is_active: ''
   })
+
+  success_delete = {
+    modalTitle: true,
+    showModal: false,
+    message: []
+  }
   constructor(private userService: UserService, private activeRoute: ActivatedRoute, private router: Router){
   }
 
@@ -61,11 +67,18 @@ export class UserComponent {
   deleteUser(id: number) {
     if (confirm('Bạn có chắc chắn muốn xóa người dùng này?')) {
       this.userService.delete(id).subscribe({
-        next: () => {
+        next: (response) => {
           this.loadUsers(1);
+          this.success_delete.modalTitle = true;
+          this.success_delete.showModal = true;
+          console.log(response.message)
+
         },
         error: (error) => {
           console.error('Lỗi khi xóa người dùng:', error);
+          this.success_delete.modalTitle = false;
+          this.success_delete.showModal = true;
+          this.success_delete.message = Object.values(error.error.errors)
         }
       });
     }
@@ -82,6 +95,7 @@ export class UserComponent {
   }
   onClose(){
     this.showModal = false;
+    this.success_delete.showModal = false;
     console.log("12")
     this.selectedUser = new UserDTO({});
   }
@@ -93,4 +107,6 @@ export class UserComponent {
     
     this.loadUsers(1, this.searchParam);;
   }
+
+
 }
