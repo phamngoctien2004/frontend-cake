@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { LoadingComponent } from "../../components/loading/loading.component";
 import { UserService } from '../../services/user.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
@@ -6,6 +6,7 @@ import { UserDTO } from '../../dto/user.dto';
 import { FormsModule, NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ModalComponent } from "../../components/modal/modal.component";
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-user-form',
@@ -28,7 +29,8 @@ export class UserFormComponent {
   constructor(
     private userService: UserService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private authService: AuthService
   ) {}
   ngOnInit(){
     this.route.params.subscribe(params => {
@@ -83,6 +85,8 @@ export class UserFormComponent {
       next: (response) => {
         this.success.showModal=true;
         this.success.modalTitle=true;
+        this.authService.setCurrentUser(response.data);
+        console.log(response)
         setTimeout(()=>{
           this.router.navigate(['/dashboard/users']);
         },3000)

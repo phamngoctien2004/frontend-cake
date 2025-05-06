@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -11,9 +11,15 @@ export class HeaderComponent {
   @Output() toggleSidebar = new EventEmitter<void>();
   user: any;
   constructor(private authService: AuthService){
-    this.user = this.authService.getCurrentUser();
+    console.log(this.user)
   }
 
+  ngOnInit(){
+    this.authService.getCurrentUserObservable().subscribe(user => {
+      this.user = user;
+      console.log(user)
+    });
+  }
   logout(){
     this.authService.logout().subscribe({
       next: (response) => {

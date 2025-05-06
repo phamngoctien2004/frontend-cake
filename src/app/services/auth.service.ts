@@ -30,8 +30,12 @@ export class AuthService {
   getCurrentUser(): any{
     return this.currentUserSubject.value;
   }
+  getCurrentUserObservable(): Observable<any>{
+    return this.currentUserSubject.asObservable();
+  }
   setCurrentUser(user: any): void{
     this.currentUserSubject.next(user);
+    localStorage.setItem('currentUser', JSON.stringify(this.currentUserSubject.value));
   }
   setToken(token: string){
     localStorage.setItem('token', token);
